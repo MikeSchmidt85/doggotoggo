@@ -1,6 +1,5 @@
 from flask import flash
 from flask_app.config.mysqlconnection import connectToMySQL
-from flask_app import app
 
 
 class VIP:
@@ -11,13 +10,10 @@ class VIP:
         self.gender = data["gender"]
         self.email = data["email"]
 
+
     @classmethod
-    def get_all(cls, data):
-        query = "SELECT * FROM users;"
-        results = connectToMySQL("dogs").query_db(query, data)
-
-        users = []
-        for row in results:
-            users.append(VIP(row))
-
-        return users
+    def create(cls,data):
+        query = "INSERT INTO vip (your_name, your_dogs_name, gender, email, created_at, updated_at) VALUE (%(your_name)s, %(your_dogs_name)s, %(gender)s, %(email)s, NOW(), NOW());"
+        results = connectToMySQL("dogs").query_db(query,data)
+        print(results)
+        return results
