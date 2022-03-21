@@ -1,6 +1,7 @@
 from flask import render_template, redirect, request, session
 from flask_app import app
 from flask_app.models.vip import VIP
+from flask_app.models.adoption import Adoption
 
 
 @app.route("/")
@@ -28,7 +29,16 @@ def our_story():
     return render_template("our_story.html")
 
 
-@app.route('/vip', methods=["POST"])
+@app.route("/vip", methods=["POST"])
 def vip():
     VIP.create(request.form)
+    return redirect("/")
+
+@app.route("/application")
+def application():
+    return render_template("application.html")
+
+@app.route("/adoption", methods=["POST"])
+def adoption():
+    Adoption.create(request.form)
     return redirect("/")
